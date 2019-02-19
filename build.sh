@@ -1,0 +1,1 @@
+docker build . --tag 7_days_to_die:latest
