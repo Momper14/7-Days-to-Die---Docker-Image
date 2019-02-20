@@ -6,20 +6,17 @@ RUN apt-get update && \
         apt-get install -y --no-install-recommends \
         ca-certificates
 
+# create extra User 7days
 RUN useradd -mUs /bin/bash -d /7daysded 7days
 
 USER 7days
 
+# add data
 ADD --chown=7days:7days data/7daysded /7daysded
 ADD --chown=7days:7days startserver.sh /7daysded/startserver.sh
 ADD --chown=7days:7days data/Mods /7daysded/Mods
 RUN mkdir -p /7daysded/logs /7daysded/.local/share/7DaysToDie
 ADD --chown=7days:7days data/7daysded/serverconfig.xml /7daysded/.local/share/7DaysToDie/serverconfig.xml
-
-# docker dont likes me
-#USER root
-#RUN chown -R 7days:7days /7daysded/Mods /7daysded/logs
-#USER 7days
 
 WORKDIR /7daysded
 
@@ -30,8 +27,10 @@ EXPOSE 8080-8081/tcp
 # Alloc's mods map
 EXPOSE 8082/tcp
 
+# server ports
 EXPOSE 26900/tcp 26900-26902/udp
 
+# additional start params
 ENV START_ARGS ""
 
 ENTRYPOINT ["./startserver.sh",  "-configfile=/7daysded/.local/share/7DaysToDie/serverconfig.xml", "$START_ARGS"]
