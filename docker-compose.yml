@@ -14,8 +14,10 @@ services:
       - Mods:/7daysded/Mods/
       - Data:/7daysded/.local/share/7DaysToDie
       - Logs:/7daysded/logs
+      - Config:/7daysded/Data/Config
 
 volumes:
   Mods:
   Data:
   Logs:
+  Config:
